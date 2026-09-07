@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday!</title>
+  <style>
+    :root {
+      --bg-color: #fff5f5;
+      --card-bg: #ffffff;
+      --accent: #ff6b81;
+      --text: #2d3436;
+      --subtext: #636e72;
+    }
+
+    /* 1. Gradient Background */
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 100%);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* 2. Fade-In Animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(255, 107, 129, 0.15), 0 10px 25px rgba(0, 0, 0, 0.05);
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    h1 {
+      color: var(--accent);
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      word-wrap: break-word;
+    }
+
+    p.subtitle {
+      color: var(--subtext);
+      font-size: 1rem;
+      margin-top: 0;
+      font-weight: 600;
+    }
+
+    /* 3. Photo Frame Zoom & Hover Effect */
+    .photo-frame {
+      width: 100%;
+      height: 320px;
+      border-radius: 18px;
+      overflow: hidden;
+      margin: 25px 0;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      background-color: #f0f0f0;
+    }
+
+    .photo-frame:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 14px 28px rgba(255, 107, 129, 0.25);
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .photo-frame:hover img {
+      transform: scale(1.05);
+    }
+
+    /* 4. Styled Letter Box */
+    .letter {
+      background-color: #fffaf0;
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 20px 24px;
+      text-align: left;
+      line-height: 1.8;
+      font-size: 1.05rem;
+      margin: 25px 0;
+      color: #4a4a4a;
+      white-space: pre-line;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    /* 5. Glowing Pulsing Button */
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 107, 129, 0.5); }
+      70% { box-shadow: 0 0 0 15px rgba(255, 107, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 107, 129, 0); }
+    }
+
+    button {
+      background: linear-gradient(135deg, #ff6b81, #ff4757);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      font-size: 1.05rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      animation: pulse 2s infinite;
+    }
+
+    button:hover {
+      transform: translateY(-2px) scale(1.03);
+    }
+
+    .surprise {
+      display: none;
+      margin-top: 20px;
+      padding: 18px;
+      background-color: #ffeaa7;
+      border-radius: 12px;
+      font-weight: bold;
+      color: #2d3436;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Happy Birthday, MANOOOOORTI! ❤️</h1>
+    <p class="subtitle">I LOVE YOUUU SO MUCH I WISH YOU THE HAPPIEST OF BIRTHDAYS MY LADY</p>
+
+    <div class="photo-frame">
+      <img src="us.jpg" alt="Favorite Memory">
+    </div>
+
+    <div class="letter">
+      Dear noonoo,
+
+HAPPY BIRTHDAYYYY MI AMOORRR. كل سنة وانتي طيبة حياتييي. I LOVE YOUUUU SO MUCH AND IM SO HAPPY FOR YOU TODAY, INSHALLAH YOU HAVE THE BEST DAY EVER AND I HOPE YOU LIKE THIS, ITS PORBABLY NOT THE ONLY THING I HAVE FOR YOU TODAY BUT ITS KINDA EARLY SO IDK IM STILL WORKING ON YOUR EDIT RN EVEN THO ITS KINDA HARD WITH 0 MOTIVATION AND THE OPBR GRIND. IM SO PROUDDD OF YOUUU IM SURE BY THE TIME YOURE READING THIS YOU WOULD BE STRESSED WITH PHYSICS BUT DONT WORRY ABOUT IT I KNOW YOU DID AMAZING ON THE EXAMS YOU DID SO FAR (hasnt even happened yet while im writing this but idc i believe in you my goat). No matter what happens i know you will do amazing things in your life and im so proud of who you are and how much you pushed through everything youve been through thus far. IM SOSOSOSOSOS PROUD OF YOU AND NOW YOU FINALLY HIT THE BIG 19 YOU FATASS CHUD. nobody is giving you better suprises than me. i win i win i win i win i win just like how i won your heart 😝. THANK YOUUU FOR EVERYTHING YOU DO FOR ME, you make me feel like the luckiest guy in the world and you care for me and i love spenidng my time with you and playing games or putting you on random shows or watching random shows you put me on to its always so much fun with your presence manoorti, i could lowkey write you a whole book just complimenting everything about you, from your gorgeous eyes, to your beautiful smile, and your adorable voice always makes me shy just listening to you yap and talking to you its so much fun i love it so much. i love how jealous you are and i cant imagine loving anyone other than you, YOURE MY SOULMATE MY LIFE MY BEAUTIFUL BABY GIRL. I WISH YOU THE BEST YEAR OF YOUR LIFE MY SWEETHEART. IM SO PROUD OF YOUUUUUUU.
+
+      Love,
+      Mr. Balls
+    </div>
+
+    <button onclick="showSurprise()">Click for a surprise 🎁</button>
+
+    <div id="surprise-box" class="surprise">
+      🎟️ Birthday Voucher: Valid for one full day of genshin, watching any show of your choice,kisses, attention, and hugs 😝
+    </div>
+  </div>
+
+  <script>
+    function showSurprise() {
+      const box = document.getElementById('surprise-box');
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+
+</body>
+</html>
