@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday!</title>
+  <style>
+    :root {
+      --bg-color: #fff5f5;
+      --card-bg: #ffffff;
+      --accent: #ff6b81;
+      --text: #2d3436;
+      --subtext: #636e72;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 100%);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Floating Heart Particles in Background */
+    .heart-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .heart-particle {
+      position: absolute;
+      bottom: -50px;
+      font-size: 1.5rem;
+      opacity: 0.6;
+      animation: floatUp 8s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(0.8) rotate(0deg);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.2) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Floating Music Control Button */
+    #music-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10000;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: none;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.9rem;
+    }
+
+    /* =========================================
+       1. PRESENT OVERLAY (Soft Sway Effect)
+       ========================================= */
+    #gift-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      cursor: pointer;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+    }
+
+    #gift-glow {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      background: rgba(255, 107, 129, 0.5);
+      border-radius: 50%;
+      filter: blur(50px);
+      z-index: 1;
+      animation: pulseGlow 2.5s infinite ease-in-out;
+    }
+
+    #gift-icon {
+      font-size: 9rem;
+      z-index: 2;
+      position: relative;
+      user-select: none;
+      /* Soft Gentle Sway Animation */
+      animation: gentleSway 3s infinite ease-in-out;
+      transition: transform 0.4s ease;
+    }
+
+    .tap-text {
+      z-index: 2;
+      margin-top: 15px;
+      font-weight: bold;
+      color: var(--accent);
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      animation: pulseText 2s infinite ease-in-out;
+    }
+
+    /* Soft, gentle floating sway instead of fast vibrating */
+    @keyframes gentleSway {
+      0% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-8px) rotate(-3deg); }
+      50% { transform: translateY(0) rotate(0deg); }
+      75% { transform: translateY(-8px) rotate(3deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(0.9); opacity: 0.5; }
+      50% { transform: scale(1.2); opacity: 0.8; }
+      100% { transform: scale(0.9); opacity: 0.5; }
+    }
+
+    @keyframes pulseText {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+
+    #gift-overlay.open {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* =========================================
+       2. MAIN CARD CONTENT
+       ========================================= */
+    #main-content {
+      opacity: 0;
+      visibility: hidden;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.8s ease-in;
+      position: relative;
+      padding: 20px;
+      box-sizing: border-box;
+      z-index: 1;
+    }
+
+    #main-content.reveal {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(255, 107, 129, 0.15), 0 10px 25px rgba(0, 0, 0, 0.05);
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      position: relative;
+      overflow: visible;
+      text-align: center;
+    }
+
+    /* =========================================
+       3. PEEKING CAT STYLES
+       ========================================= */
+    .peeking-cat {
+      position: absolute;
+      width: 100px;
+      height: auto;
+      z-index: 10;
+      pointer-events: none;
+      filter: drop-shadow(0px 6px 12px rgba(0, 0, 0, 0.12));
+    }
+
+    .peeking-cat.right {
+      bottom: 20px;
+      right: -65px;
+      animation: gentlePeekRight 4.5s ease-in-out infinite;
+    }
+
+    @keyframes gentlePeekRight {
+      0%, 100% { transform: translateY(0) rotate(8deg); }
+      50% { transform: translateY(-10px) rotate(12deg); }
+    }
+
+    @media (max-width: 650px) {
+      .peeking-cat {
+        width: 75px;
+      }
+      .peeking-cat.right {
+        right: -35px;
+      }
+    }
+
+    h1 {
+      color: var(--accent);
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      word-wrap: break-word;
+    }
+
+    p.subtitle {
+      color: var(--subtext);
+      font-size: 1rem;
+      margin-top: 0;
+      font-weight: 600;
+    }
+
+    .photo-frame {
+      width: 100%;
+      height: 320px;
+      border-radius: 18px;
+      overflow: hidden;
+      margin: 25px 0;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      background-color: #f0f0f0;
+    }
+
+    .photo-frame:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 14px 28px rgba(255, 107, 129, 0.25);
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .photo-frame:hover img {
+      transform: scale(1.05);
+    }
+
+    .letter {
+      background-color: #fffaf0;
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 20px 24px;
+      text-align: left;
+      line-height: 1.8;
+      font-size: 1.05rem;
+      margin: 25px 0;
+      color: #4a4a4a;
+      white-space: pre-line;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 107, 129, 0.5); }
+      70% { box-shadow: 0 0 0 15px rgba(255, 107, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 107, 129, 0); }
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .surprise-btn, .game-btn {
+      background: linear-gradient(135deg, #ff6b81, #ff4757);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      font-size: 1.05rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .surprise-btn {
+      animation: pulse 2s infinite;
+    }
+
+    .game-btn {
+      background: linear-gradient(135deg, #a55eea, #8854d0);
+    }
+
+    .surprise-btn:hover, .game-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+    }
+
+    .surprise {
+      display: none;
+      margin-top: 15px;
+      padding: 18px;
+      background-color: #ffeaa7;
+      border-radius: 12px;
+      font-weight: bold;
+      color: #2d3436;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    /* =========================================
+       4. TRIVIA QUIZ MODAL STYLES
+       ========================================= */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10001;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .modal-card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 450px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+      position: relative;
+      animation: fadeInUp 0.4s ease;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--subtext);
+      font-weight: bold;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .quiz-opt-btn {
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .quiz-opt-btn:hover {
+      border-color: var(--accent);
+      background: #fff0f3;
+    }
+
+    .quiz-opt-btn.correct {
+      background: #2ed573 !important;
+      color: white !important;
+      border-color: #2ed573 !important;
+    }
+
+    .quiz-opt-btn.wrong {
+      background: #ff4757 !important;
+      color: white !important;
+      border-color: #ff4757 !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Heart Particles in Background -->
+  <div class="heart-bg" id="heart-container"></div>
+
+  <!-- Audio Element (Name file song.mp3 in GitHub) -->
+  <audio id="bg-music" src="song.mp3" loop></audio>
+
+  <!-- Play/Pause Toggle Button -->
+  <button id="music-btn" onclick="toggleMusic()">🎵 Pause Music</button>
+
+  <!-- 1. PRESENT OVERLAY (Appears first) -->
+  <div id="gift-overlay" onclick="openGift()">
+    <div id="gift-glow"></div>
+    <div id="gift-icon">🎁</div>
+    <div class="tap-text">TAP TO OPEN YOUR GIFT ❤️</div>
+  </div>
+
+  <!-- 2. MAIN CARD CONTENT -->
+  <div id="main-content">
+    <div class="container">
+
+      <!-- PEEKING CAT PNGs -->
+      <img src="cat-right.png" alt="Cute Cat" class="peeking-cat right">
+
+      <h1>Happy Birthday, MANOOOOORTI! ❤️</h1>
+      <p class="subtitle">I LOVE YOUUU SO MUCH I WISH YOU THE HAPPIEST OF BIRTHDAYS MY LADY</p>
+
+      <div class="photo-frame">
+        <img src="us.jpg" alt="Favorite Memory">
+      </div>
+
+      <div class="letter">
+Dear noonoo,
+
+HAPPY BIRTHDAYYYY MI AMOORRR. كل سنة وانتي طيبة حياتييي. I LOVE YOUUUU SO MUCH AND IM SO HAPPY FOR YOU TODAY, INSHALLAH YOU HAVE THE BEST DAY EVER AND I HOPE YOU LIKE THIS, ITS PORBABLY NOT THE ONLY THING I HAVE FOR YOU TODAY BUT ITS KINDA EARLY SO IDK IM STILL WORKING ON YOUR EDIT RN EVEN THO ITS KINDA HARD WITH 0 MOTIVATION AND THE OPBR GRIND. IM SO PROUDDD OF YOUUU IM SURE BY THE TIME YOURE READING THIS YOU WOULD BE STRESSED WITH PHYSICS BUT DONT WORRY ABOUT IT I KNOW YOU DID AMAZING ON THE EXAMS YOU DID SO FAR (hasnt even happened yet while im writing this but idc i believe in you my goat). No matter what happens i know you will do amazing things in your life and im so proud of who you are and how much you pushed through everything youve been through thus far. IM SOSOSOSOSOS PROUD OF YOU AND NOW YOU FINALLY HIT THE BIG 19 YOU FATASS CHUD. nobody is giving you better suprises than me. i win i win i win i win i win just like how i won your heart 😝. THANK YOUUU FOR EVERYTHING YOU DO FOR ME, you make me feel like the luckiest guy in the world with how you care for me and i want to make you feel the exact same way. I love spenidng my time with you and playing games or putting you on random shows or watching random shows you put me on to its always so much fun with your presence manoorti, i could lowkey write you a whole book just complimenting everything about you, from your gorgeous eyes, to your beautiful smile, and your adorable voice always makes me shy just listening to you yap and talking to you its so much fun i love it so much. Your sweet soul and i love how jealous you are and i cant imagine loving anyone other than you, YOURE MY SOULMATE, MY LIFE, 7AYATI, 7ABAIBTI , MY BEAUTIFUL BABY GIRL. I WISH YOU THE BEST YEAR OF YOUR LIFE MY SWEETHEART. IM SO PROUD OF YOUUUUUUU.
+
+        Love,
+        Mr. Balls
+      </div>
+
+      <div class="button-group">
+        <button class="surprise-btn" onclick="showSurprise()">Click for a surprise 🎁</button>
+        <button class="game-btn" onclick="openQuiz()">LOCK IN BAE</button>
+      </div>
+
+      <div id="surprise-box" class="surprise">
+        🎟️ Birthday coupon: Valid for one full day of genshin, watching any show of your choice,kisses, attention, and hugs 😝
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. TRIVIA QUIZ MODAL -->
+  <div id="quiz-modal" class="modal-overlay">
+    <div class="modal-card">
+      <span class="close-modal" onclick="closeQuiz()">&times;</span>
+      <h2 id="quiz-title" style="color: var(--accent); margin-top: 0;">Birthday Trivia! 🎂</h2>
+      <p id="quiz-question" style="font-weight: 600; color: #4a4a4a; min-height: 48px;"></p>
+      
+      <div id="quiz-options" class="quiz-options"></div>
+      
+      <p id="quiz-result" style="margin-top: 15px; font-weight: bold;"></p>
+    </div>
+  </div>
+
+  <script>
+    const music = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-btn');
+
+    // Create Floating Hearts
+    const heartContainer = document.getElementById('heart-container');
+    const hearts = ['❤️', '💖', '💕', '💗', '🌸'];
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart-particle');
+      heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+      heart.style.fontSize = (Math.random() * 1 + 1) + 'rem';
+      heartContainer.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 8000);
+    }
+
+    setInterval(createHeart, 600);
+
+    function openGift() {
+      const overlay = document.getElementById('gift-overlay');
+      const content = document.getElementById('main-content');
+      
+      music.play().then(() => {
+        musicBtn.style.display = 'flex';
+      }).catch(err => console.log('Audio error:', err));
+
+      overlay.classList.add('open');
+      setTimeout(() => {
+        content.classList.add('reveal');
+        document.body.style.overflow = "auto";
+      }, 200);
+    }
+
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+        musicBtn.innerHTML = '🎵 Pause Music';
+      } else {
+        music.pause();
+        musicBtn.innerHTML = '🎵 Play Music';
+      }
+    }
+
+    function showSurprise() {
+      const box = document.getElementById('surprise-box');
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
+
+    /* =========================================
+       TRIVIA QUIZ LOGIC
+       ========================================= */
+    const quizQuestions = [
+      {
+        question: "Who won your heart first?",
+        options: ["Mr. Balls 😝", "Some random guy (I'LL KILL YOU)", "Genshin (👀)"],
+        answer: [0]
+      },
+      {
+        question: "Whos the prettiest girl in the world?",
+        options: ["manoorti", "noonoo", "mnmn", "manar"],
+        answer: [0, 1, 2, 3]
+      },
+      {
+        question: "Whos the GOAT of surprises?",
+        options: ["Me RAHHHHHH 🏆", "Me 2 boo", " me 3 nananana"],
+        anyAnswer: true
+      }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+
+    function openQuiz() {
+      currentQ = 0;
+      score = 0;
+      document.getElementById('quiz-modal').style.display = 'flex';
+      loadQuestion();
+    }
+
+    function closeQuiz() {
+      document.getElementById('quiz-modal').style.display = 'none';
+    }
+
+    function loadQuestion() {
+      const q = quizQuestions[currentQ];
+      document.getElementById('quiz-title').innerText = `Question ${currentQ + 1} of ${quizQuestions.length}`;
+      document.getElementById('quiz-question').innerText = q.question;
+      document.getElementById('quiz-result').innerText = '';
+
+      const optsContainer = document.getElementById('quiz-options');
+      optsContainer.innerHTML = '';
+
+      q.options.forEach((optText, index) => {
+        const btn = document.createElement('button');
+        btn.classList.add('quiz-opt-btn');
+        btn.innerText = optText;
+        btn.onclick = () => selectAnswer(index, btn);
+        optsContainer.appendChild(btn);
+      });
+    }
+
+    function selectAnswer(selectedIndex, clickedBtn) {
+      const q = quizQuestions[currentQ];
+      const buttons = document.querySelectorAll('.quiz-opt-btn');
+
+      // Disable all options so she can't spam click
+      buttons.forEach(b => b.onclick = null);
+
+      let isCorrect = false;
+
+      if (q.anyAnswer) {
+        isCorrect = true;
+      } else if (Array.isArray(q.answer) && q.answer.includes(selectedIndex)) {
+        isCorrect = true;
+      } else if (selectedIndex === q.answer) {
+        isCorrect = true;
+      }
+
+      if (isCorrect) {
+        clickedBtn.classList.add('correct');
+        score++;
+        document.getElementById('quiz-result').innerText = "CORRECTTT! 🎉";
+      } else {
+        clickedBtn.classList.add('wrong');
+        const correctIdx = Array.isArray(q.answer) ? q.answer[0] : q.answer;
+        if (buttons[correctIdx]) {
+          buttons[correctIdx].classList.add('correct');
+        }
+        document.getElementById('quiz-result').innerText = "NOPE! 😝";
+      }
+
+      setTimeout(() => {
+        currentQ++;
+        if (currentQ < quizQuestions.length) {
+          loadQuestion();
+        } else {
+          showQuizResults();
+        }
+      }, 1500);
+    }
+
+    function showQuizResults() {
+      document.getElementById('quiz-title').innerText = "Quiz Completed! 👑";
+      document.getElementById('quiz-question').innerText = `You scored ${score} out of ${quizQuestions.length}! ig bro 😒`;
+      document.getElementById('quiz-options').innerHTML = '';
+      document.getElementById('quiz-result').innerText = 'Bonus Reward: Drowning you in kisses 😘 !';
+    }
+  </script>
+
+</body>
+</html>
